@@ -142,7 +142,7 @@ class Lamp:
         """
         Создание и подготовка к работе объекта "Лампа"
 
-        :param condition: Состояние лампы: включена/выключена
+        :param condition: Состояние лампы: включена/выключена (on/off)
         :param color: Цветовой режим лампы
         :param price: Цена лампы
 
@@ -163,14 +163,14 @@ class Lamp:
             raise ValueError('Цена лампы должна быть положительным числом')
         self.price = price
 
-    def is_condition(self) -> bool:
+    def is_lamp_on(self) -> bool:
         """
         Функция, проверяющая, включена ли лампа
         :return: Является ли лампа включенной
 
         Примеры:
         >>> lamp = Lamp('on', 'red', 10)
-        >>> lamp.is_condition()
+        >>> lamp.is_lamp_on()
         """
         ...
 
@@ -190,7 +190,7 @@ class Lamp:
             raise TypeError('Новый цветовой режим лампы должен быть типа str')
         ...
 
-    def lamp_discount(self, discount: (int, float)) -> (int, float):
+    def set_lamp_discount(self, discount: (int, float)) -> (int, float):
         """
         Функция, вычисляющая новую цену лампы
 
@@ -199,7 +199,7 @@ class Lamp:
 
         Примеры:
         >>> lamp = Lamp('on', 'red', 10)
-        >>> lamp.lamp_discount(50)
+        >>> lamp.set_lamp_discount(50)
         """
         if not isinstance(discount, (int, float)):
             raise TypeError('Скидка на лампу должна быть типа int или float')
@@ -211,4 +211,3 @@ class Lamp:
 if __name__ == "__main__":
     # TODO работоспособность экземпляров класса проверить с помощью doctest
     doctest.testmod()
-
