@@ -1,36 +1,56 @@
-BOOKS_DATABASE = [
-    {
-        "id": 1,  # идентификатор книги
-        "name": "test_name_1",  # название книги
-        "pages": 200,  # количество страниц в книге
-    },
-    {
-        "id": 2,
-        "name": "test_name_2",
-        "pages": 400,
-    }
-]
-
-
 class Book:
-    def __init__(self, id_: int, name: str, pages: int):
-        self.id_ = id_
-        self.name = name
-        self.pages = pages
+    """ Базовый класс книги. """
+    def __init__(self, name: str, author: str):
+         self._name = name
+         self._author = author
+    @property
+    def name(self):
+        return self._name
+    @property
+    def author(self):
+        return self._author
 
-    def __str__(self) -> str:
-        return f'Книга "{self.name}"'
+    def __str__(self):
+        return f"Книга: {self.name}\nАвтор: {self.author}"
 
-    def __repr__(self) -> str:
-        return f'Book(id_={self.id_}, name={self.name!r}, pages={self.pages})'
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r})"
 
 
-if __name__ == '__main__':
-    # инициализируем список книг
-    list_books = [
-        Book(id_=book_dict["id"], name=book_dict["name"], pages=book_dict["pages"]) for book_dict in BOOKS_DATABASE
-    ]
-    for book in list_books:
-        print(book)  # проверяем метод __str__
+class PaperBook(Book):
+    """ Бумажная книга """
+    def __init__(self, name: str, author: str, pages: int):
+        super().__init__(name, author)
+        if not isinstance(pages, int):
+            raise TypeError('Количество страниц должно быть типа int')
+        if pages > 0:
+            self.pages = pages
+        else:
+            raise ValueError('Количество страниц - положительное число')
 
-    print(list_books)  # проверяем метод __repr__
+    def __str__(self):
+        return f"Книга: {self.name}\nАвтор: {self.author}\nКоличество страниц {self.pages}"
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r}, pages={self.pages!r})"
+
+
+class AudioBook(Book):
+    """ Аудиокнига """
+    def __init__(self, name: str, author: str, duration: float):
+        super().__init__(name, author)
+
+        if not isinstance(duration, float):
+            raise TypeError('Продолжительность аудиокниги должна быть типа float')
+        if duration > 0:
+            self.duration = duration
+        else:
+            raise ValueError('Продолжительность аудиокниги - положительное число')
+
+    def __str__(self):
+        return f"Книга: {self.name}\nАвтор: {self.author}\nПродолжительность аудиокниги: {self.duration}"
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r}, duration={self.duration!r})"
+
+
