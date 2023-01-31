@@ -38,9 +38,9 @@ class Library:
             return self.books[-1].id_ + 1
 
     def get_index_by_book_id(self, id_: int):
-        for count, value in enumerate(self.books):
-            if self.books[count].id_ == id_:
-                return count
+        for index, book in enumerate(self.books):
+            if self.books[index].id_ == id_:
+                return index
         raise ValueError('Книги с запрашиваемым id не существует')
 
 
