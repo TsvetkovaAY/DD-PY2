@@ -1,11 +1,11 @@
 BOOKS_DATABASE = [
     {
-        "id": 1,  # идентификатор книги
+        "id_": 1,  # идентификатор книги
         "name": "test_name_1",  # название книги
         "pages": 200,  # количество страниц в книге
     },
     {
-        "id": 2,
+        "id_": 2,
         "name": "test_name_2",
         "pages": 400,
     }
@@ -28,7 +28,7 @@ class Book:
 if __name__ == '__main__':
     # инициализируем список книг
     list_books = [
-        Book(id_=book_dict["id"], name=book_dict["name"], pages=book_dict["pages"]) for book_dict in BOOKS_DATABASE
+        Book(id_=book_dict["id_"], name=book_dict["name"], pages=book_dict["pages"]) for book_dict in BOOKS_DATABASE
     ]
     for book in list_books:
         print(book)  # проверяем метод __str__
