@@ -49,6 +49,22 @@ class Vehicle:
             raise ValueError('Скорость, разрешенная на дороге, должна быть больше нуля')
         ...
 
+    def sell_cost(self, years: float) -> float:
+        """Функция, которая вычисляет цену, за которую можно продать транспортное средство спустя время эксплуатации,
+         исходя из его характеристик
+         :param: years: период эксплуатации транспортного средства
+         :return: стоимость транспортного средства
+
+         Примеры:
+        >>> vehicle = Vehicle(230.5, 30000.0, 4)
+        >>> vehicle.sell_cost(5.0)
+         """
+        if not isinstance(years, float):
+            raise TypeError('Период эксплуатации должен быть типа float')
+        if years < 0:
+            raise ValueError('Период эксплуатации должен быть больше нуля')
+        ...
+
     def __str__(self):
         return f"Максимальная скорость: {self.max_speed}\nСтоимость: {self.cost}\n" \
                f"Количество пассажиров: {self.number_of_passengers}"
@@ -61,17 +77,18 @@ class Vehicle:
 class Car(Vehicle):
     """Дочерний класс: 'Легковой автомобиль'
 
-        :param: max_speed: максимальаня скорость, которую может развивать транспортное средство
-        :param: cost: стоимость транспортного средства (в евро)
-        :param: number_of_passengers: количество пассажиров, которое может вместить транспортное средство
-        :param: type_of_gearbox: тип коробки передач: автоматическая (AT) или механическая (MT)
-        :param: type_of_fuel: тип потребляемого топлива (petrol/diesel/electricity)
+    :param: max_speed: максимальаня скорость, которую может развивать транспортное средство
+    :param: cost: стоимость транспортного средства (в евро)
+    :param: number_of_passengers: количество пассажиров, которое может вместить транспортное средство
+    :param: type_of_gearbox: тип коробки передач: автоматическая (AT) или механическая (MT)
+    :param: type_of_fuel: тип потребляемого топлива (petrol/diesel/electricity)
 
         Примеры:
         >>> car = Car(230.5, 30000.0, 4, 'AT', 'petrol')
     """
     def __init__(self, max_speed: float, cost: float, number_of_passengers: int,
                  type_of_gearbox: str, type_of_fuel: str):
+        """Инициализация экземпляра класса"""
         super().__init__(max_speed, cost, number_of_passengers)
         if not isinstance(type_of_gearbox, str):
             raise TypeError('Вид коробки передач должен быть строкой')
@@ -81,20 +98,27 @@ class Car(Vehicle):
             raise TypeError('Вид используемого топлива должен быть строкой')
         self.type_of_fuel = type_of_fuel
 
-    def refueling(self, fuel: str) -> str:
-        """ Функция, которая принимает тип топлива, который есть на заправке и возвращает ответ, подходит ли это топливо
-         для данной машины
+    def sell_cost(self, years: float, mileage: float) -> float:
+        """Функция, которая вычисляет цену, за которую можно продать легковой автомобиль спустя время эксплуатации,
+         исходя из его характеристик
+         Метод перегружен, так как в случае легкового автомобиля необходимо учитывать больше параметров для расчета цены
+         :param: years: период эксплуатации транспортного средства
+         :param: mileage: пробег (км)
+         :return: стоимость транспортного средства
 
-        :param: fuel: тип топлива на заправке
-        :return: подходит ли эта заправка для данной машины
+         Примеры:
+         >>> car = Car(230.5, 30000.0, 4, 'AT', 'petrol')
+         >>> car.sell_cost(5.0, 90000.0)
+         """
+        if not isinstance(years, float):
+            raise TypeError('Период эксплуатации должен быть типа float')
+        if years < 0:
+            raise ValueError('Период эксплуатации должен быть больше нуля')
 
-        Примеры:
-        >>> car = Car(230.5, 30000.0, 4, 'AT', 'petrol')
-        >>> car.refueling('petrol')
-        """
-
-        if not isinstance(fuel, str):
-            raise TypeError('название топлива на заправке должно быть типа str')
+        if not isinstance(mileage, float):
+            raise TypeError('Пробег должен быть типа float')
+        if mileage < 0:
+            raise ValueError('Пробег должен быть больше нуля')
         ...
 
     def __str__(self):
@@ -121,6 +145,7 @@ class Bike(Vehicle):
         >>> bike = Bike(50.0, 500.0, 1, 2, 'highway')
     """
     def __init__(self, max_speed: float, cost: float, number_of_passengers: int, number_of_wheels: int, road_type: str):
+        """Инициализация экземпляра класса"""
         super().__init__(max_speed, cost, number_of_passengers)
 
         if not isinstance(number_of_wheels, int):
@@ -132,6 +157,29 @@ class Bike(Vehicle):
         if not isinstance(road_type, str):
             raise TypeError('Тип дороги, для которого предназначен велосипед, должен быть строкой')
         self.road_type = road_type
+
+    def sell_cost(self, years: float, frame: float) -> float:
+        """Функция, которая вычисляет цену, за которую можно продать велосипед спустя время эксплуатации,
+         исходя из его характеристик
+         Метод перегружен, так как в случае велосипеда необходимо учитывать больше параметров для расчета цены
+         :param: years: период эксплуатации транспортного средства
+         :param: frame: состояние рамы велосипеда (оценка повреждений по шкале 1-10)
+         :return: стоимость транспортного средства
+
+         Примеры:
+         >>> bike = Bike(50.0, 500.0, 1, 2, 'highway')
+         >>> bike.sell_cost(2.0, 8.0)
+         """
+        if not isinstance(years, float):
+            raise TypeError('Период эксплуатации должен быть типа float')
+        if years < 0:
+            raise ValueError('Период эксплуатации должен быть больше нуля')
+
+        if not isinstance(frame, float):
+            raise TypeError('Оценка рамы должна быть типа float')
+        if frame < 0:
+            raise ValueError('Оценка рамы должна быть больше нуля')
+        ...
 
     def __str__(self):
         return f"Максимальная скорость: {self.max_speed}\nСтоимость: {self.cost}\n" \
@@ -145,5 +193,6 @@ class Bike(Vehicle):
 
 
 if __name__ == "__main__":
+    bike = Bike(50.0, 500.0, 1, 2, 'highway')
     doctest.testmod()
     pass
